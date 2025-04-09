@@ -113,6 +113,22 @@
         });
 
         loadTradingView("NASDAQ:AAPL");
+
+        function calculateProfit() {
+            const investment = parseFloat(document.getElementById('investment').value);
+            const variation = parseFloat(document.getElementById('variation').value);
+            const resultElement = document.getElementById('result');
+
+            if (isNaN(investment) || isNaN(variation)) {
+                resultElement.textContent = "Por favor, ingresa valores válidos.";
+                return;
+            }
+
+            const profit = investment * (variation / 100);
+            const finalAmount = investment + profit;
+
+            resultElement.textContent = `Ganancia estimada: $${profit.toFixed(2)} | Monto final: $${finalAmount.toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
