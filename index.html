@@ -54,20 +54,36 @@
       height: 400px;
       border: none;
     }
-    #fullscreen-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 10;
-    }
-    #tradingview-chart.fullscreen {
+
+    /* Estilos para la guía */
+    #guide-modal {
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 1000;
-      width: 100vw !important;
-      height: 100vh !important;
-      background: #1e1e1e;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      z-index: 10000;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    #guide-content {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    #guide-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -85,7 +101,6 @@
         <option value="OANDA:UK100GBP">FTSE 100 (UK)</option>
         <option value="OANDA:JP225USD">Nikkei 225 (JP)</option>
       </select>
-      <button id="fullscreen-btn" onclick="toggleFullscreen()">Pantalla Completa</button>
       <div id="tradingview-chart"></div>
     </div>
 
@@ -103,6 +118,20 @@
       <h2>Noticias del Mercado</h2>
       <p>Puedes ver noticias en tiempo real con precios y porcentajes en MarketWatch:</p>
       <a class="button-link" href="https://www.marketwatch.com/" target="_blank">Ver Noticias del Mercado</a>
+    </div>
+  </div>
+
+  <!-- Botón flotante para iniciar la guía -->
+  <button id="guide-button" onclick="startGuide()">¿Cómo usar esta página?</button>
+
+  <!-- Modal de guía -->
+  <div id="guide-modal">
+    <div id="guide-content">
+      <h2>Guía de uso</h2>
+      <p id="guide-text">Bienvenido a la página. Aquí aprenderás a usar cada sección.</p>
+      <br/>
+      <button onclick="nextStep()">Siguiente</button>
+      <button onclick="closeGuide()">Cerrar</button>
     </div>
   </div>
 
@@ -142,16 +171,39 @@
       resultElement.textContent = `Ganancia estimada: $${profit.toFixed(2)} | Monto final: $${finalAmount.toFixed(2)}`;
     }
 
-    function toggleFullscreen() {
-      const chart = document.getElementById('tradingview-chart');
-      chart.classList.toggle('fullscreen');
-    }
-
     document.getElementById("symbol-select").addEventListener("change", function () {
       loadTradingView(this.value);
     });
 
     loadTradingView("NASDAQ:AAPL");
+
+    // Guía interactiva
+    let step = 0;
+    const steps = [
+      "1️⃣ En la parte superior puedes seleccionar un activo financiero como acciones, índices o criptomonedas. Esto actualizará el gráfico en tiempo real.",
+      "2️⃣ En el simulador puedes escribir cuánto dinero planeas invertir y cuánto esperas ganar (porcentaje). Haz clic en 'Calcular' para ver tus resultados.",
+      "3️⃣ Abajo, puedes acceder a noticias del mercado en MarketWatch, donde encontrarás información actualizada de economía y finanzas.",
+      "✅ ¡Listo! Ahora puedes explorar y usar la plataforma a tu ritmo."
+    ];
+
+    function startGuide() {
+      step = 0;
+      document.getElementById('guide-modal').style.display = 'block';
+      document.getElementById('guide-text').textContent = steps[step];
+    }
+
+    function nextStep() {
+      step++;
+      if (step < steps.length) {
+        document.getElementById('guide-text').textContent = steps[step];
+      } else {
+        closeGuide();
+      }
+    }
+
+    function closeGuide() {
+      document.getElementById('guide-modal').style.display = 'none';
+    }
   </script>
 </body>
 </html>
