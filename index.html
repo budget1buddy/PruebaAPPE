@@ -21,7 +21,7 @@
       max-width: 1200px;
       margin-top: 20px;
     }
-    .trading-chart, .news-section, .simulator-section {
+    .trading-chart, .news-section, .simulator-section, .invest-section {
       background: #2a2a2a;
       padding: 20px;
       margin: 10px 0;
@@ -45,7 +45,7 @@
     select:hover, button:hover, a.button-link:hover {
       background: #e6b800;
     }
-    .news-section h2, .simulator-section h2 {
+    .news-section h2, .simulator-section h2, .invest-section h2 {
       border-bottom: 2px solid #ffcc00;
       padding-bottom: 10px;
     }
@@ -69,7 +69,6 @@
       padding: 40px;
       box-sizing: border-box;
     }
-
     #guide-content {
       background: #2a2a2a;
       padding: 20px;
@@ -78,7 +77,6 @@
       margin: auto;
       text-align: center;
     }
-
     #guide-button {
       position: fixed;
       bottom: 20px;
@@ -100,6 +98,17 @@
         <option value="OANDA:US30USD">Dow Jones 30 (OANDA)</option>
         <option value="OANDA:UK100GBP">FTSE 100 (UK)</option>
         <option value="OANDA:JP225USD">Nikkei 225 (JP)</option>
+        <!-- 10 empresas extra -->
+        <option value="NYSE:IBM">IBM</option>
+        <option value="NASDAQ:MSFT">Microsoft (MSFT)</option>
+        <option value="NYSE:JNJ">Johnson & Johnson (JNJ)</option>
+        <option value="NASDAQ:AMZN">Amazon (AMZN)</option>
+        <option value="NYSE:WMT">Walmart (WMT)</option>
+        <option value="NYSE:BA">Boeing (BA)</option>
+        <option value="NASDAQ:GOOGL">Alphabet (GOOGL)</option>
+        <option value="NYSE:KO">Coca-Cola (KO)</option>
+        <option value="NYSE:MCD">McDonald's (MCD)</option>
+        <option value="NASDAQ:NFLX">Netflix (NFLX)</option>
       </select>
       <div id="tradingview-chart"></div>
     </div>
@@ -107,17 +116,23 @@
     <div class="simulator-section">
       <h2>Simulador de Inversión</h2>
       <label>Monto invertido ($):</label>
-      <input type="number" id="investment" placeholder="1000">
+      <input type="number" id="investment" placeholder="1000" />
       <label>Variación esperada (%):</label>
-      <input type="number" id="variation" placeholder="10">
+      <input type="number" id="variation" placeholder="10" />
       <button onclick="calculateProfit()">Calcular</button>
       <p id="result"></p>
     </div>
 
     <div class="news-section">
       <h2>Noticias del Mercado</h2>
-      <p>Puedes ver noticias en tiempo real con precios y porcentajes en MarketWatch:</p>
-      <a class="button-link" href="https://www.marketwatch.com/" target="_blank">Ver Noticias del Mercado</a>
+      <p>Puedes ver noticias en tiempo real con precios y porcentajes en Investing.com:</p>
+      <a class="button-link" href="https://www.investing.com/" target="_blank" rel="noopener noreferrer">Ver Noticias del Mercado</a>
+    </div>
+
+    <div class="invest-section">
+      <h2>Invertir Aquí</h2>
+      <p>Si quieres comprar algún activo, puedes hacerlo a través de GBM:</p>
+      <a class="button-link" href="https://www.gbm.com.mx/" target="_blank" rel="noopener noreferrer">Ir a GBM para Invertir</a>
     </div>
   </div>
 
@@ -139,19 +154,19 @@
     function loadTradingView(symbol) {
       document.getElementById("tradingview-chart").innerHTML = "";
       new TradingView.widget({
-        "container_id": "tradingview-chart",
-        "width": "100%",
-        "height": 500,
-        "symbol": symbol,
-        "interval": "D",
-        "timezone": "Etc/UTC",
-        "theme": "dark",
-        "style": "1",
-        "locale": "es",
-        "toolbar_bg": "#1e1e1e",
-        "enable_publishing": false,
-        "hide_top_toolbar": false,
-        "hide_legend": false
+        container_id: "tradingview-chart",
+        width: "100%",
+        height: 500,
+        symbol: symbol,
+        interval: "D",
+        timezone: "Etc/UTC",
+        theme: "dark",
+        style: "1",
+        locale: "es",
+        toolbar_bg: "#1e1e1e",
+        enable_publishing: false,
+        hide_top_toolbar: false,
+        hide_legend: false
       });
     }
 
@@ -182,7 +197,8 @@
     const steps = [
       "1️⃣ En la parte superior puedes seleccionar un activo financiero como acciones, índices o criptomonedas. Esto actualizará el gráfico en tiempo real.",
       "2️⃣ En el simulador puedes escribir cuánto dinero planeas invertir y cuánto esperas ganar (porcentaje). Haz clic en 'Calcular' para ver tus resultados.",
-      "3️⃣ Abajo, puedes acceder a noticias del mercado en MarketWatch, donde encontrarás información actualizada de economía y finanzas.",
+      "3️⃣ Abajo, puedes acceder a noticias del mercado en Investing.com, donde encontrarás información actualizada de economía y finanzas.",
+      "4️⃣ En la sección 'Invertir Aquí' puedes acceder al sitio de GBM para comprar activos fácilmente.",
       "✅ ¡Listo! Ahora puedes explorar y usar la plataforma a tu ritmo."
     ];
 
